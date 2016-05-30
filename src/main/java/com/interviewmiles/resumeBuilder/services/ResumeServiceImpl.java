@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.interviewmiles.resumeBuilder.exception.ResumeNotFoundException;
 import com.interviewmiles.resumeBuilder.models.Resume;
 import com.interviewmiles.resumeBuilder.repository.ResumeRepository;
 
@@ -41,7 +42,7 @@ public class ResumeServiceImpl implements ResumeService {
 	@Override
 	public Resume findById(String id) {
 		Optional<Resume> resume = repository.findOne(id);
-		return resume.orElse(null);
+		return resume.orElseThrow(() -> new ResumeNotFoundException(id));
 	}
 
 	@Override
